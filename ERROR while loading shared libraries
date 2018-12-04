@@ -1,0 +1,117 @@
+./GMPtest.out: error while loading shared libraries: libgmpxx.so.4: cannot open shared object file: No such file or directory
+
+这个问题产生原因是 新版本的Ubuntu 中使用的库文件是更新的版本的libtiff.so.4 ，而FSL中的默认使用的是libtiff.so.3的库，版本号不一致，导致程序启动不了。这个问题的解决的办法很简单。有两种方式，即做一个链接或者直接复制一下。
+复制：cd /usr/lib
+sudo cp libtiff.so.4 libtiff.so.3
+或者做一个链接：cd /usr/lib
+ln -s libtiff.so.4 libtiff.so.3
+其他类似的库文件错误，可以用同样的方法解决。
+
+
+ldconfig命令的用途主要是在默认搜寻目录/lib和/usr/lib以及动态库配置文件/etc/ld.so.conf内所列的目录下，搜索出可共享的动态链接库（格式如lib*.so*）,进而创建出动态装入程序(ld.so)所需的连接和缓存文件。缓存文件默认为/etc/ld.so.cache，此文件保存已排好序的动态链接库名字列表，为了让动态链接库为系统所共享，需运行动态链接库的管理命令ldconfig，此执行程序存放在/sbin目录下。
+ldconfig通常在系统启动时运行，而当用户安装了一个新的动态链接库时，就需要手工运行这个命令。
+
+在linux下运行可执行程序时，如果出现如下错误表示系统不知道xxx.so放在哪个目录下：
+        error while loading shared libraries: libgtest.so.0: cannot open shared object file: No such file or directory
+        可以用如下命令来查看可执行程序依赖的so及加载情况：
+        #ldd main.out
+            linux-vdso.so.1 =>  (0x00007fffd77ff000)
+            libgtest.so.0 => not found 
+            libgcc_s.so.1 => /lib/libgcc_s.so.1 (0x00007fc9cf0f1000)
+            libc.so.6 => /lib/libc.so.6 (0x00007fc9ced7f000)
+            libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x00007fc9cea72000)
+        这时候就要在/etc/ld.so.conf中加入xxx.so所在的目录。
+        一般而言，xxx.so会存放在/usr/local/lib这个目录下，当然也可以用如下命令来查看xxx.so所在目录：
+        #ldconfig -p|grep libgtest
+        解决办法有如下两种：
+        1.在终端执行如下命令：
+        #sudo bash -c 'echo /usr/local/lib >> /etc/ld.so.conf ' && sudo ldconfig
+        2.手动在/etc/ld.so.conf文件中加下如下内容：
+        在/etc/ld.so.conf中加入/usr/local/lib这一行，保存之后运行/sbin/ldconfig -v更新一下配置即可。
+
+        附注：
+            库文件在连接（静态库和共享库）和运行（仅限于使用共享库的程序）时被使用，其搜索路径是在系统中进行设置的。
+            一般 Linux 系统把/lib和/usr/lib两个目录作为默认的库搜索路径，所以使用这两个目录中的库时不需要进行设置搜索路径即可直接使用。
+            对于处于默认库搜索路径之外的库，需要将库的位置添加到库的搜索路径之中。设置库文件的搜索路径有下列两种方式，可任选其中一种使用：
+            1.修改环境变量LD_LIBRARY_PATH
+            在环境变量 LD_LIBRARY_PATH中指明库的搜索路径，比如：
+            #export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+            2.修改配置文件ld.so.conf
+            在/etc/ld.so.conf文件中添加库的搜索路径，具体方式如前面所示。
+            为了加快程序执行时对共享库的定位速度，避免使用搜索路径查找共享库的低效率，系统直接读取库列表文件/etc/ld.so.cache搜索路径。
+            /etc/ld.so.cache 是一个非文本的数据文件，不能直接编辑，它是根据/etc/ld.so.conf中设置的搜索路径，由/sbin/ldconfig命令将这些搜索路径下的共享库文件集中在一起而生成的。
+            ldconfig 命令要以root权限执行。
+        
+https://lonesysadmin.net/2013/02/22/error-while-loading-shared-libraries-cannot-open-shared-object-file/
+Error While Loading Shared Libraries, Cannot Open Shared Object File
+Bob Plankers February 22, 2013 
+Best Practices, How To, System Administration 
+In the “I wish the Internet had an actual correct answer” category comes a question from a Windows colleague trying to build software on Linux. He asks “I’m trying to do some web performance testing and I compiled weighttp and the libev libraries, which worked fine, but when I try to run the program it gives me the following error.”
+weighttp: error while loading shared libraries: libev.so.4: cannot open shared object file: No such file or directory
+“I checked /usr/local/lib and the files are there. Do you have a suggestion?”
+Ah yes, a classic problem when building software. The problem here is that libev installed itself into /usr/local/lib:
+$ ls -l /usr/local/lib/libev*
+-rw-r--r--. 1 root root 435770 Feb 22 15:20 /usr/local/lib/libev.a
+-rwxr-xr-x. 1 root root 926 Feb 22 15:20 /usr/local/lib/libev.la
+lrwxrwxrwx. 1 root root 14 Feb 22 15:20 /usr/local/lib/libev.so -> libev.so.4.0.0
+lrwxrwxrwx. 1 root root 14 Feb 22 15:20 /usr/local/lib/libev.so.4 -> libev.so.4.0.0
+-rwxr-xr-x. 1 root root 174059 Feb 22 15:20 /usr/local/lib/libev.so.4.0.0
+…but the dynamic linker doesn’t know where they are, because it’s never heard of /usr/local/lib. /usr/local is a traditional place for add-on software to install itself, so it doesn’t interfere with the system libraries. If you’re coming from a Windows background the .so files are essentially equal to DLLs, and load when you execute a program that depends on them. Programs that use dynamic libraries have several advantages, in that they’re smaller, and the libraries can be updated without having to recompile all the programs that depend on them. So if there’s a security problem with libev you can just patch libev, and not have to rebuild everything that uses that library.
+You can see what libraries a program is dynamically linked to with the ‘ldd’ command:
+$ ldd /usr/local/bin/weighttp
+        linux-vdso.so.1 =>  (0x00007fff251ff000)
+        libev.so.4 => not found
+        libpthread.so.0 => /lib64/libpthread.so.0 (0x00007f8f1cc1e000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007f8f1c88b000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f8f1ce49000)
+That confirms we’re just dealing with the new library, and not some other problem. Cool.
+Anyhow, there are five fixes that come to mind, and I’ll group them into “terrible ideas” and “decent ideas.” Of course, terrible and decent are my opinion, and your situation may dictate a different conclusion, so I’ll add some commentary. If you’re looking for the quickest way out skip to #5.
+Suboptimal Fixes/Terrible Ideas[0]
+1. Install the libraries to /usr/lib instead of /usr/local/lib. I really don’t like this because you’re installing add-on software into a system directory, and you might introduce a conflict, overwrite a pre-existing library, and/or destabilize other parts of the system. People complain about Windows being unstable, and this sort of thing is exactly why it gets unstable – installers overwrite system DLLs with their own all the time. Recent versions of Windows go to a lot of trouble to keep installers from doing this. If you’re bored look up the WinSxS subsystem, which is what Microsoft built to deal with the problem. Linux doesn’t have something that deals with the problem, it just assumes that you know what you’re doing. Such is the power of UNIX. Here’s a rope, try not to hang yourself.
+When you’re building open-source software under a UNIX OS you often use the “configure” command. You can change where the software installs by using the “prefix” flag:
+$ ./configure –prefix=/usr
+This will also install all the binaries, header files, etc. into the system directories. If you were one of my system administrators I’d get on your case for doing this and make you go back and do it right. This isn’t the right way. Don’t do it this way. The right ways are simple, do those instead.
+2. Make a symbolic link from /lib to the files in /usr/local/lib. This is less intrusive than installing everything to /usr, but still a bad idea, for most of the same reasons as #1. If you’re the kind of person that likes to smoke while refueling vehicles go ahead and try:
+$ sudo ln -s /usr/local/lib/libev.so.4 /usr/lib/libev.so.4
+$ sudo ldconfig
+Obviously substitute the correct file name for libev.so.4. The ‘ldconfig’ command updates the system’s dynamic library cache so it sees the changed libraries.
+Still, don’t do this. Bad sysadmin.
+3. Copy the files from /usr/local/lib into /usr/lib. This is even more of a bad idea than #2 because now you’ve got two sets of libraries, and if you ever have to patch or upgrade it you’ll probably forget about one set. Oops. I hope you weren’t patching because of a security problem!
+$ sudo cp /usr/local/lib/libev.* /usr/lib
+$ sudo ldconfig
+With all these ideas you’re also very likely to run afoul of the 32-bit vs. 64-bit thing with newer OSes, where 32-bit libraries go in /usr/lib and 64-bit libraries go in /usr/lib64. It might work, it might not work, but the better ways are a heck of a lot simpler.
+Better Idea
+4. Set the environment variable LD_LIBRARY_PATH to point to /usr/local/lib. If you are new to UNIX/Linux and don’t know what shell you’re running use the ‘ps’ command to see the processes you’re running:
+$ ps
+  PID TTY          TIME CMD
+ 7796 pts/4    00:00:00 tcsh
+10048 pts/4    00:00:00 ps
+Hey look, I’m running tcsh, so my fix would be:
+setenv LD_LIBRARY_PATH /usr/local/lib
+and I can put that command into ~/.cshrc so it executes when I log in.
+If ps tells you you’re running bash:
+$ ps
+  PID TTY          TIME CMD
+ 7796 pts/4    00:00:00 bash
+10048 pts/4    00:00:00 ps
+the command is:
+export LD_LIBRARY_PATH="/usr/local/lib"
+and you can put that into your ~/.bashrc so it’s always there.
+Changing the environment is a per-user thing, so other users on the system will need to do this, or you’d need to put the fixes in /etc/bashrc or /etc/csh.cshrc, the system-wide login scripts. This fix is nice, though, if you don’t have root-level privileges on a system, and/or want to install things into your own home directory.
+Absolutely Simple, Best Fix Ever[2]
+5. If you have root privileges on this Linux box, why not just ask the dynamic linker to check /usr/local/lib, too? Edit the file /etc/ld.so.conf and add “/usr/local/lib” on its own line at the bottom[3]. DO NOT REMOVE THINGS FROM THIS FILE. When you’re done it might look something like:
+$ cat /etc/ld.so.conf
+include ld.so.conf.d/*.conf
+/usr/local/lib
+or it might look completely different, with the exception of the last line. Run ldconfig to tell it to update the cache:
+$ sudo ldconfig
+You can check your work with:
+$ ldconfig -p | grep local
+You should see the stuff in /usr/local/lib show up now, and your binary works. Boy, that was easy, and you didn’t make more work for yourself down the road, destabilize the system, overwrite system files, or leave security vulnerabilities lying around. Cool.
+Good luck. As always, if you see a problem here let me know in the comments. If you have other questions you’d like me to answer in a blog post you should email them or tweet them at me! My contact information is on the top-right at lonesysadmin.net. While you’re there why don’t you subscribe to my feed, too?
+——–
+[0] So why did I list the bad ideas? Because you’ll see every one suggested as a fix by people pretending to be experts[1]. It is my hope that you’ll understand why these are bad ideas, why they might cause you more work in the long run, and can make an informed decision.
+[1] I am not an expert, I’m a guy that’s done a lot of this stuff, and might be able to answer your question. If someone calls themselves an expert run away.
+[2] Not guaranteed to be simple or best. I like it, though.
+[3] If you’re stymied by editing on the command line try “nano.” It’s a simple editor and is often installed. Another option is ‘vi’ but it’s cryptic, and you can use Google to find a tutorial on it if you need one. The nice thing about vi is that it’s always installed.
+

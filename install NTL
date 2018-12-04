@@ -1,0 +1,14 @@
+Step 1. Once GMP is installed, you can install NTL as follows:
+Step 2. download NTL, uncompress and cd into the directory ntl-XXX/src
+        On the command line:
+        $cd ... ./ntl-XXX/src
+        $./configure NTL_THREADS=on NTL_THREAD_BOOST=on NTL_EXCEPTIONS=on
+        $make
+        //$make install
+        --------------------------------------------------------------
+        $sudo make install
+        --------------------------------------------------------------
+        fatal error: NTL/ZZ.h: No such file or directory
+        $sudo apt-get install libntl-dev
+        
+        This should install NTL into /usr/local
