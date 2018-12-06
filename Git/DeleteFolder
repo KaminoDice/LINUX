@@ -35,7 +35,6 @@ root@vultr:/home/helrr/FHE/HELR/HELR# rm -r src
 root@vultr:/home/helrr/FHE/HELR/HELR# rm Makefile
 
 
-
 root@vultr:/home/helrr/FHE/HELR/HELR# git push
 Username for 'https://github.com': John-L-Smith
 Password for 'https://John-L-Smith@github.com': 
