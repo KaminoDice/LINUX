@@ -1,65 +1,53 @@
-step 1 : 
+# Delete a Folder
 
-# git config --global user.name "john-l-smith"
-# git config --global user.name
-# git config --global core.editor vi
-# git config --global core.editor
-# git init
-# git clone https://github.com/John-L-Smith/FHE
-
-============================================================
-
-root@vultr:/home/helrr# git config --global user.name "john-l-smith"
-root@vultr:/home/helrr# git config --global user.name
-john-l-smith
-root@vultr:/home/helrr# git config --global core.editor vi
-root@vultr:/home/helrr# git config --global core.editor   
+## root@vultr:/home/HEAAN# git config --global user.name "John-L-Smith"
+## root@vultr:/home/HEAAN# git config --global user.name               
+John-L-Smith
+## root@vultr:/home/HEAAN# git config --global core.editor vi
+root@vultr:/home/HEAAN# git config --global core.editor   
 vi
-root@vultr:/home/helrr# git init
-Initialized empty Git repository in /home/helrr/.git/
-root@vultr:/home/helrr# git clone https://github.com/John-L-Smith/FHE
-Cloning into 'FHE'...
-Resolving deltas: 100% (217/217), done.
-root@vultr:/home/helrr# ls
-FHE
-root@vultr:/home/helrr# cd FHE
-root@vultr:/home/helrr/FHE# cd HELR
-root@vultr:/home/helrr/FHE/HELR# cd HELR
-
-root@vultr:/home/helrr/FHE/HELR/HELR# rm *.*
-root@vultr:/home/helrr/FHE/HELR/HELR# ls
-Makefile  data	foo  src
-root@vultr:/home/helrr/FHE/HELR/HELR# rm -r data
-root@vultr:/home/helrr/FHE/HELR/HELR# rm -r foo 
-root@vultr:/home/helrr/FHE/HELR/HELR# rm -r src
-root@vultr:/home/helrr/FHE/HELR/HELR# rm Makefile
-
-
-root@vultr:/home/helrr/FHE/HELR/HELR# git push
+root@vultr:/home/HEAAN/FHE# ls
+EXPERIENCE  HEAAN  HELR  HElib	README.md  iDASH2017  iDASH2018
+root@vultr:/home/HEAAN/FHE# cd HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+HEAAN.rar
+README.md
+root@vultr:/home/HEAAN/FHE/HEAAN# rm -r HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# rm HEAAN.rar
+## root@vultr:/home/HEAAN/FHE/HEAAN# git rm -r --cached HEAAN
+## root@vultr:/home/HEAAN/FHE/HEAAN# git rm -r --cached HEAAN.rar
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'delete HEAAN for it being a old version'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
 Username for 'https://github.com': John-L-Smith
 Password for 'https://John-L-Smith@github.com': 
-Everything up-to-date
-# git rm -r --cached dirname
 
-# root@vultr:/home/helrr/FHE/HELR# git commit -m 'did it work '
-[master e189c65] did it work
- Committer: john-l-smith <root@vultr.guest>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 74 files changed, 25634 deletions(-)
- delete mode 100644 HELR/HELR/Database.cpp
- ...... .... ...... ......................
- 
-# root@vultr:/home/helrr/FHE/HELR# git push origin master
+# Add a Folder
+## root@vultr:/home/HEAAN/FHE/HEAAN# git clone https://github.com/snucrypto/HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+README.md
+........
+## root@vultr:/home/HEAAN/FHE/HEAAN# git add HEAAN/
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'upload the newest HEAAN library with its .zip file 20181206'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
 Username for 'https://github.com': John-L-Smith
 Password for 'https://John-L-Smith@github.com': 
-Counting objects: 3, done.
+root@vultr:/home/HEAAN/FHE/HEAAN# zip -r HEAAN.zip HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+HEAAN.zip
+README.md
+........
+## root@vultr:/home/HEAAN/FHE/HEAAN# git add HEAAN.zip
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'upload the newest HEAAN library with its .zip file 20181206'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+Counting objects: 4, done.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 921.01 KiB | 0 bytes/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/John-L-Smith/FHE
+   b5b509b..f784ad9  master -> master
