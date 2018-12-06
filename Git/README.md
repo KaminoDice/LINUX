@@ -1,1 +1,58 @@
 How to use Git on a Linux (Debian)
+# Install git client on a linux
+apt update
+apt install git
+
+# Delete a Folder
+
+## root@vultr:/home/HEAAN# git config --global user.name "John-L-Smith"
+## root@vultr:/home/HEAAN# git config --global user.name               
+John-L-Smith
+## root@vultr:/home/HEAAN# git config --global core.editor vi
+root@vultr:/home/HEAAN# git config --global core.editor   
+vi
+root@vultr:/home/HEAAN/FHE# ls
+EXPERIENCE  HEAAN  HELR  HElib	README.md  iDASH2017  iDASH2018
+root@vultr:/home/HEAAN/FHE# cd HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+HEAAN.rar
+README.md
+root@vultr:/home/HEAAN/FHE/HEAAN# rm -r HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# rm HEAAN.rar
+## root@vultr:/home/HEAAN/FHE/HEAAN# git rm -r --cached HEAAN
+## root@vultr:/home/HEAAN/FHE/HEAAN# git rm -r --cached HEAAN.rar
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'delete HEAAN for it being a old version'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+
+# Add a Folder
+## root@vultr:/home/HEAAN/FHE/HEAAN# git clone https://github.com/snucrypto/HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+README.md
+........
+## root@vultr:/home/HEAAN/FHE/HEAAN# git add HEAAN/
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'upload the newest HEAAN library with its .zip file 20181206'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+root@vultr:/home/HEAAN/FHE/HEAAN# zip -r HEAAN.zip HEAAN
+root@vultr:/home/HEAAN/FHE/HEAAN# ls
+HEAAN
+HEAAN.zip
+README.md
+........
+## root@vultr:/home/HEAAN/FHE/HEAAN# git add HEAAN.zip
+## root@vultr:/home/HEAAN/FHE/HEAAN# git commit -m 'upload the newest HEAAN library with its .zip file 20181206'
+## root@vultr:/home/HEAAN/FHE/HEAAN# git push origin master
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+Counting objects: 4, done.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 921.01 KiB | 0 bytes/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/John-L-Smith/FHE
+   b5b509b..f784ad9  master -> master
