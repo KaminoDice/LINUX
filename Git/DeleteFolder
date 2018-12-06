@@ -1,0 +1,66 @@
+step 1 : 
+
+# git config --global user.name "john-l-smith"
+# git config --global user.name
+# git config --global core.editor vi
+# git config --global core.editor
+# git init
+# git clone https://github.com/John-L-Smith/FHE
+
+============================================================
+
+root@vultr:/home/helrr# git config --global user.name "john-l-smith"
+root@vultr:/home/helrr# git config --global user.name
+john-l-smith
+root@vultr:/home/helrr# git config --global core.editor vi
+root@vultr:/home/helrr# git config --global core.editor   
+vi
+root@vultr:/home/helrr# git init
+Initialized empty Git repository in /home/helrr/.git/
+root@vultr:/home/helrr# git clone https://github.com/John-L-Smith/FHE
+Cloning into 'FHE'...
+Resolving deltas: 100% (217/217), done.
+root@vultr:/home/helrr# ls
+FHE
+root@vultr:/home/helrr# cd FHE
+root@vultr:/home/helrr/FHE# cd HELR
+root@vultr:/home/helrr/FHE/HELR# cd HELR
+
+root@vultr:/home/helrr/FHE/HELR/HELR# rm *.*
+root@vultr:/home/helrr/FHE/HELR/HELR# ls
+Makefile  data	foo  src
+root@vultr:/home/helrr/FHE/HELR/HELR# rm -r data
+root@vultr:/home/helrr/FHE/HELR/HELR# rm -r foo 
+root@vultr:/home/helrr/FHE/HELR/HELR# rm -r src
+root@vultr:/home/helrr/FHE/HELR/HELR# rm Makefile
+
+
+
+root@vultr:/home/helrr/FHE/HELR/HELR# git push
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+Everything up-to-date
+# git rm -r --cached dirname
+
+# root@vultr:/home/helrr/FHE/HELR# git commit -m 'did it work '
+[master e189c65] did it work
+ Committer: john-l-smith <root@vultr.guest>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 74 files changed, 25634 deletions(-)
+ delete mode 100644 HELR/HELR/Database.cpp
+ ...... .... ...... ......................
+ 
+# root@vultr:/home/helrr/FHE/HELR# git push origin master
+Username for 'https://github.com': John-L-Smith
+Password for 'https://John-L-Smith@github.com': 
+Counting objects: 3, done.
