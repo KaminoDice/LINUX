@@ -1,0 +1,60 @@
+http://wpacli.com/posts/sslocal/  
+
+Shadowsocks client install in Ubuntu  
+2017/11/20  
+Categories: Linux Tags: Setup  
+
+Install  
+apt-get install python-pip  
+pip install shadowsocks  
+Setup  
+sudo vim /etc/shadowsocks.json  
+
+{  
+  "server":"my_server_ip",  
+  "local_address": "127.0.0.1",  
+  "local_port":1080,  
+  "server_port":my_server_port,  
+  "password":"my_password",  
+  "timeout":300,  
+  "method":"aes-256-cfb"  
+}  
+
+Proxy in shell(proxychains-ng)  
+make and install  
+git clone https://github.com/rofl0r/proxychains-ng.git  
+cd proxychains-ng  
+
+./configure --prefix=/usr --sysconfdir=/etc  
+make  
+sudo make install  
+sudo make install-config  
+setup config  
+sudo vim /etc/proxychains.conf  
+
+
+[ProxyList]  
+socks5  127.0.0.1 1080  
+Auto start after boot  
+直接加rc.local  
+nohup sslocal -c ~/sslocal .json >/dev/null 2>&1 &  
+echo " nohup sslocal -c ~/sslocal .json >/dev/null 2>&1 &" >/etc/rc.local  
+优雅一点的方式: Systemctl  
+vim /etc/systemd/system/sslocal.service  
+[Unit]  
+Description=Daemon to start Shadowsocks Client  
+Wants=network-online.target  
+After=network.target  
+
+[Service]  
+Type=simple  
+ExecStart=/usr/local/bin/sslocal -c /etc/shadowsocks.json --pid-file /var/run/sslocal.pid --log-file /var/log/sslocal.log
+  
+  
+[Install]  
+WantedBy=multi-user.target  
+systemctl enable sslocal  
+
+Test  
+proxychains curl ip.gs  
+
