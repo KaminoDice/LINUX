@@ -1,0 +1,10 @@
+$ killall remmina
+
+$ xkill
+
+killall processname  
+
+  
+kill pid  
+
+kill pid
