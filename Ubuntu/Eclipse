@@ -1,0 +1,44 @@
+https://stackoverflow.com/questions/14721514/how-do-i-install-eclipse-with-c-in-ubuntu-12-10-quantal-quetzal  
+
+
+  
+  
+  
+
+
+I also tried http://www.eclipse.org/cdt/ in Ubuntu 12.04.2 LTS and works fine!
+
+First, I downloaded it from www.eclipse.org/downloads/, choosing Eclipse IDE for C/C++ Developers.
+I save the file somewhere, let´s say into my home directory. Open a console or terminal, and type:
+
+>>cd ~; tar xvzf eclipse*.tar.gz;
+
+Remember for having Eclipse running in Linux, it is required a JVM, so download a jdk file e.g jdk-7u17-linux-i586.rpm (I cann´t post the link due to my low reputation) ... anyway
+Install the .rpm file following http://www.wikihow.com/Install-Java-on-Linux
+Find the path to the Java installation, by typing:
+
+>>which java
+
+I got /usr/bin/java. To start up Eclipse, type:
+
+>>cd ~/eclipse; ./eclipse -vm /usr/bin/java
+
+Also, once everything is installed, in the home directory, you can double-click the executable icon called eclipse, and then you´ll have it!. 
+
+In case you like an icon, create a .desktop file in /usr/share/applications:
+>>sudo gedit /usr/share/applications/eclipse.desktop
+The .desktop file content is as follows:
+
+[Desktop Entry]  
+Name=Eclipse  
+Type=Application  
+Exec="This is the path of the eclipse executable on your machine"  
+Terminal=false 
+Icon="This is the path of the icon.xpm file on your machine"  
+Comment=Integrated Development Environment  
+NoDisplay=false  
+Categories=Development;IDE  
+Name[en]=eclipse.desktop    
+  
+    
+Best luck!
