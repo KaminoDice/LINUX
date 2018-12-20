@@ -1,11 +1,6 @@
 https://stackoverflow.com/questions/14721514/how-do-i-install-eclipse-with-c-in-ubuntu-12-10-quantal-quetzal  
 
 
-  
-  
-  
-
-
 I also tried http://www.eclipse.org/cdt/ in Ubuntu 12.04.2 LTS and works fine!
 
 First, I downloaded it from www.eclipse.org/downloads/, choosing Eclipse IDE for C/C++ Developers.
@@ -42,3 +37,25 @@ Name[en]=eclipse.desktop
   
     
 Best luck!
+
+for example: 
+--------------------------------------------
+[Desktop Entry]
+
+Name=Eclipse for C++
+Name[en]=eclipse.desktop
+Type=Application
+
+Exec=/home/tree/Downloads/eclipse/eclipse
+Terminal=false
+
+Icon=/home/tree/Downloads/eclipse/icon.xpm
+Comment=Integrated Development Environment
+NoDisplay=false
+
+Categories=Development;IDE
+--------------------------------------------
+
+BE CAREFULL OF THIS TWO LINES:
+Exec=/home/tree/Downloads/eclipse/eclipse
+Icon=/home/tree/Downloads/eclipse/icon.xpm
