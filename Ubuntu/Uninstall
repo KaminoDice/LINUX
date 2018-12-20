@@ -1,0 +1,22 @@
+https://www.howtogeek.com/229699/how-to-uninstall-software-using-the-command-line-in-linux/  
+
+
+step 1. open a Terminal window. type the command "dpkg --list" at the prompt and press “Enter”.  
+  
+step 2. scroll through the list of installed packages in the Terminal window to find the one you want to uninstall.   
+        note the full name of the package.
+
+step 3. uninstall a program, "sudo apt-get --purge remove gimp".
+
+
+(a) If you don’t want to remove the configuration files, simply leave out the “--purge” command, as shown in the following command.
+    sudo apt-get remove [gimp]
+    
+(b) When you uninstall a program, there may be packages that the uninstalled program depended upon that are no longer used. To remove any unused packages, use the “autoremove” command, as shown in the following command.
+    sudo apt-get autoremove
+    
+(c) You can combine the two commands for removing a program and removing dependencies that are no longer being used into one, as shown below (again, two dashes before “auto-remove”).
+    sudo apt-get purge --auto-remove [gimp]
+    
+(d) If you’re short on space, you can use the “clean” command to remove downloaded archive files, as shown below.
+    sudo apt-get clean
