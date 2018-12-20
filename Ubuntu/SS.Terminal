@@ -20,7 +20,7 @@ sudo vim /etc/shadowsocks.json
   "method":"aes-256-cfb"  
 }  
 
-Proxy in shell(proxychains-ng)  
+# Proxy in shell(proxychains-ng)  
 make and install  
 git clone https://github.com/rofl0r/proxychains-ng.git  
 cd proxychains-ng  
