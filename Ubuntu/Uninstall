@@ -20,3 +20,4 @@ step 3. uninstall a program, "sudo apt-get --purge remove gimp".
     
 (d) If you’re short on space, you can use the “clean” command to remove downloaded archive files, as shown below.
     sudo apt-get clean
+
