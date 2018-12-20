@@ -3,7 +3,7 @@ https://stackoverflow.com/questions/14721514/how-do-i-install-eclipse-with-c-in-
 
 I also tried http://www.eclipse.org/cdt/ in Ubuntu 12.04.2 LTS and works fine!
 
-First, I downloaded it from www.eclipse.org/downloads/, choosing Eclipse IDE for C/C++ Developers.
+First, I downloaded it (eclipse-cpp-2018-12-R-linux-gtk-x86_64.tar.gz) from www.eclipse.org/downloads/, choosing Eclipse IDE for C/C++ Developers.
 I save the file somewhere, let´s say into my home directory. Open a console or terminal, and type:
 
 >>cd ~; tar xvzf eclipse*.tar.gz;
