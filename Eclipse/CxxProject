@@ -1,0 +1,11 @@
+2.  Writing your First C/C++ Program in Eclipse
+2.1  C++ Program
+Step 0: Launch Eclipse
+Step 1: Create a new C++ Project
+For each C++ application, you need to create a project to keep all the source codes, object files, executable files, and relevant resources.
+
+To create a new C++ project:
+
+Choose "File" menu ⇒ "New" ⇒ Project... ⇒ C/C++ ⇒ C++ project.
+
+Select "C++ Managed Build" ⇒ Toolchains:(Linux GCC)
