@@ -1,0 +1,58 @@
+File >> New >> Project
+
+New Project 
+{
+	C/C++ >> C++ Project 
+}
+
+C++ Project
+{
+	Project name: MakefileIDASH2017
+        [X] Use default location
+        Location: /home/tree/eclipse-workspace/IDASH2017/IDASH2017
+        Choose file system: default
+        Project type: Makefile project >> Hello World C++ Makefile Project
+        Toolchains: Linux GCC
+}
+Next 
+
+Next
+
+Finish
+
+
+Right Click on the project MakefileIDASH2017, and choose Properties:
+If C/C++ Build >> Settings dialog is missing the "Tool Settings" tab, 
+to bring the Tool Settings Tab back: In the project properties >> C/C++ Build >> tab "Builder Settings", just check the box for the option "Generate Makefiles automatically" and that will bring back the Tool Settings Tab.
+
+To add the libraries:
+Properties >> C/C++ Build >> Settings >> Tool Settings >> GCC C++ Linker >> Libraries 
+>> Libraries(-l) : + ntl, + gmp, + HEAAN 
+                  # This will append -lntl, -lgmp, and -lHEAAN to the g++ command.
+>> Library search path(-L) : + /usr/local/lib, + /home/tree/Downloads/HEAAN/HEAAN/lib
+                  # add the directory path which can locate the above libraries. 
+
+Now, building this project will show this message:
+../MakefileIDASH2017.cpp:9:10: fatal error: BootContext.h: No such file or directory
+ #include "BootContext.h"
+          ^~~~~~~~~~~~~~~
+This is because we need to add the .h files to its includes.
+Properties >> C/C++ General >> Paths and Symbols >> Includes | Languages
+>> GNU C >> Include directories : /home/tree/Downloads/HEAAN/HEAAN/src
+>> GNU C++ >> Include directories : /home/tree/Downloads/HEAAN/HEAAN/src
+   # add the Include directories where can find the .h files of libraries.
+
+Now, building this project will show this message:
+/home/tree/Downloads/ntl-11.3.0/src/../include/NTL/tools.h:673: undefined reference to `pthread_setspecific'
+/usr/bin/ld: /home/tree/Downloads/ntl-11.3.0/src/../include/NTL/tools.h:665: undefined reference to `pthread_key_create'
+This is because we need to append the -pthread option to the g++ command.
+Properties >> C/C++ Build >> Settings >> Tool Settings >> GCC C++ Linker >> Miscellaneous
+Linker flags : -pthread
+
+Now, building this project will show this message:
+/usr/bin/ld: /usr/local/lib/libntl.a(lip.o): in function `redc(_ntl_gbigint_body*, _ntl_gbigint_body*, long, unsigned long, _ntl_gbigint_body*)':
+/home/tree/Downloads/ntl-11.3.0/src/lip.cpp:5472: undefined reference to `__gmpn_addmul_1'
+/usr/bin/ld: /home/tree/Downloads/ntl-11.3.0/src/lip.cpp:5484: undefined reference to `__gmpn_sub_n'
+It is because of the order of lntl and lgmp in C/C++ Build >> Settings >> Tool Settings 
+>> GCC C++ Linker >> Libraries >> Libraries(-l) : [ ntl gmp m HEAAN ]
+ 
