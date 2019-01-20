@@ -1,0 +1,26 @@
+Step 1. # sudo apt install apache2  
+Step 2. # sudo apt-get install php7.0 mysql-server-5.7
+Step 3. # mysql -uroot -p
+          > CREATE DATABASE IF NOT EXISTS owncloud;
+          > GRANT ALL PRIVILEGES ON owncloud.* TO 'owncloud'@'localhost' IDENTIFIED BY '123456';
+          > \q
+Step 4. # sudo apt-get install apache2 libapache2-mod-php7.0 php7.0-gd php7.0-mysql php7.0-curl php7.0-intl php7.0-mcrypt php-imagick php7.0-zip php7.0-xml php7.0-mbstring
+Step 5. # wget https://download.owncloud.org/community/owncloud-10.0.3.tar.bz2
+Step 6. # sudo tar xjf owncloud-10.0.3.tar.bz2 
+Step 7. # sudo cp -r -v owncloud/ /var/www/html/
+Step 8. # cd /var/www/html/owncloud/
+        # sudo mkdir data
+Step 9. # sudo chown -R www-data:www-data data
+        # sudo chown -R www-data:www-data config
+        # sudo chown -R www-data:www-data apps
+Step 10. # sudo vi /etc/apache2/apache2.conf 
+           <Directory /var/www/>  
+                   Options Indexes FollowSymLinks  
+                   AllowOverride All  
+                   Require all granted  
+           </Directory> 
+Step 11. # sudo service apache2 restart  
+         # sudo a2enmod rewrite  
+         # sudo a2enmod headers  
+         # sudo service apache2 restart 
+Step 12. # http://127.0.0.1/owncloud
