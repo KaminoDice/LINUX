@@ -24,3 +24,7 @@ Step 11. # sudo service apache2 restart
          # sudo a2enmod headers  
          # sudo service apache2 restart 
 Step 12. # http://127.0.0.1/owncloud
+
+
+
+Step 13. need a desktop client to configure it.
