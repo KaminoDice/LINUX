@@ -1,0 +1,20 @@
+https://stackoverflow.com/questions/9224298/how-do-i-fix-certificate-errors-when-running-wget-on-an-https-url-in-cygwin
+For example, running wget https://www.dropbox.com results in the following errors:
+
+ERROR: The certificate of `www.dropbox.com' is not trusted.
+ERROR: The certificate of `www.dropbox.com' hasn't got a known issuer.
+
+method 1:
+If you don't care about checking the validity of the certificate just add the --no-check-certificate option on the wget command-line. This worked well for me.
+NOTE: This opens you up to man-in-the-middle (MitM) attacks, and is not recommended for anything where you care about security.
+
+method 2:
+If the problem is that a known root CA is missing and when you are using ubuntu or debian, then you can solve the problem with this one line:
+
+sudo apt-get install ca-certificates
+
+apt-get is on cygwin ? apt-get is on redgat ? ;) – Denis Chenu Jun 2 '14 at 12:30
+ca-certificates was already installed in my computer. Running update-ca-certificates solved the problem. – Tomás Fox Feb 19 '15 at 2:10
+This worked also on my Synology DS215j with Debian chroot. – microspino Dec 18 '15 at 16:11
+@fox update-ca-certificates is a ubuntu command, not available in debian. – Devy Aug 22 '16 at 16:21
+@Devy It actually worked on my raspberry pi running debian wheezy – Luis Lobo Borobia Sep 5 '17 at 12:32
